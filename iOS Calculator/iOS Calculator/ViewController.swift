@@ -96,6 +96,7 @@ class ViewController: UIViewController {
             _numButton.setTitle(nbtag.toStr(), for: .normal)
             _numButton.layer.borderColor = UIColor.white.cgColor
             _numButton.layer.borderWidth = 1.0
+            _numButton.addTarget(self, action: #selector(self.numBtnPushed(_:)), for: .touchUpInside)
             self.view.addSubview(_numButton)
         }
     }
@@ -133,8 +134,25 @@ class ViewController: UIViewController {
             self.view.addSubview(_funcButton)
         }
     }
+    
+    //------------------------------------------
+    // Gesture Function
+    //------------------------------------------
+    
+    @objc internal func numBtnPushed(_ sender: UIButton) {
+        var numBtnValue: Double = 0
+        switch sender.tag {
+        case 10:
+            numBtnValue = 0.0
+        default:
+            numBtnValue = Double(sender.tag)
+        }
+        
+        print(numBtnValue)
+    }
 }
 
+// number button
 enum numBtnTag: Int {
     case one = 1, two, three, four, five, six, seven, eight, nine, zero
     static let values: [numBtnTag] = [one, two, three, four, five, six, seven, eight, nine, zero]
@@ -148,6 +166,7 @@ enum numBtnTag: Int {
     }
 }
 
+// function button
 enum funcBtnTag: String {
     case clear = "clear"
     case inverse = "inverse"
