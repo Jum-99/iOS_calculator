@@ -14,9 +14,11 @@ class ViewController: UIViewController {
     var _size = CGSize.zero;
     
     // variate
+    var maxY: CGFloat = 0;
     
     // view
     var _mainView: UIView!;
+    var _answerLabel: UILabel!;
     
     override func viewDidLoad() {
 
@@ -30,6 +32,7 @@ class ViewController: UIViewController {
         // view setting
 //        setMainView();
         setStatusBar();
+        setAnswerLabel();
         
         print("Did load: CalculatorViewController");
     }
@@ -53,6 +56,14 @@ class ViewController: UIViewController {
         let statusBar = UIView(frame: CGRect(x: 0, y: 0, width: _size.width, height: 20));
         statusBar.backgroundColor = UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.0);
         self.view.addSubview(statusBar);
+        maxY = statusBar.frame.height;
+    }
+    
+    func setAnswerLabel() {
+        let labelHeight: CGFloat = 0.227 * (_size.height - 20);
+        _answerLabel = UILabel(frame: CGRect(x: 0, y: maxY, width: _size.width, height: labelHeight));
+        _answerLabel.backgroundColor = .red;
+        self.view.addSubview(_answerLabel);
     }
     
 
