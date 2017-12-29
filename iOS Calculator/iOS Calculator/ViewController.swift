@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     
     // variate
     var maxY: CGFloat = 0
+    var buttonX: CGFloat = 0
+    var buttonY: CGFloat = 0
     
     // view
     var _mainView: UIView!
@@ -43,7 +45,6 @@ class ViewController: UIViewController {
         self.view.backgroundColor = .black
         
         // view setting
-//        setMainView()
         setStatusBar()
         setAnswerLabel()
         setNumButton()
@@ -60,12 +61,6 @@ class ViewController: UIViewController {
     // View Setting
     //------------------------------------------
     
-//    func setMainView() {
-//        _mainView = UIView(frame: CGRect(origin: CGPoint.zero, size: _size))
-//        _mainView.backgroundColor = .blue
-//        self.view.addSubview(_mainView)
-//    }
-    
     func setStatusBar() {
         let statusBar = UIView(frame: CGRect(x: 0, y: 0, width: _size.width, height: 20))
         statusBar.backgroundColor = UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.0)
@@ -79,14 +74,6 @@ class ViewController: UIViewController {
         _answerLabel.backgroundColor = .red
         self.view.addSubview(_answerLabel)
         maxY = _answerLabel.frame.maxY
-    }
-    
-    // button parameter
-    var buttonX: CGFloat = 0
-    var buttonY: CGFloat = 0
-    
-    func setFuncButton() {
-        
     }
     
     func setNumButton() {
@@ -120,6 +107,10 @@ class ViewController: UIViewController {
             self.view.addSubview(_numButton)
         }
     }
+    
+    func setFuncButton() {
+        
+    }
 }
 
 enum numBtnTag: Int {
@@ -133,5 +124,9 @@ enum numBtnTag: Int {
             return String(self.rawValue)
         }
     }
+}
+
+enum funcBtnTag: Int {
+    
 }
 
