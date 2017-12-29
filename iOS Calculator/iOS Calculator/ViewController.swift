@@ -22,18 +22,9 @@ class ViewController: UIViewController {
     
     // view
     var _mainView: UIView!
-    var _answerLabel: UILabel!
+    var _resultLabel: UILabel!
     var _numButton: UIButton!
-    var _clearButton: UIButton!
-    var _inverseButton: UIButton!
-    var _percentButton: UIButton!
-    var _deleteButton: UIButton!
-    var _divideButton: UIButton!
-    var _multiplyButton: UIButton!
-    var _subtractButton: UIButton!
-    var _addButton: UIButton!
-    var _equalButton: UIButton!
-    var _periodButton: UIButton!
+    var _funcButton: UIButton!
     
     override func viewDidLoad() {
 
@@ -46,8 +37,9 @@ class ViewController: UIViewController {
         
         // view setting
         setStatusBar()
-        setAnswerLabel()
+        setResultLabel()
         setNumButton()
+        setFuncButton()
         
         print("Did load: ViewController")
     }
@@ -68,19 +60,19 @@ class ViewController: UIViewController {
         maxY = statusBar.frame.maxY
     }
     
-    func setAnswerLabel() {
+    func setResultLabel() {
         let labelHeight: CGFloat = 0.227 * (_size.height - 20)
-        _answerLabel = UILabel(frame: CGRect(x: 0, y: maxY, width: _size.width, height: labelHeight))
-        _answerLabel.backgroundColor = .red
-        self.view.addSubview(_answerLabel)
-        maxY = _answerLabel.frame.maxY
+        _resultLabel = UILabel(frame: CGRect(x: 0, y: maxY, width: _size.width, height: labelHeight))
+        _resultLabel.backgroundColor = .red
+        self.view.addSubview(_resultLabel)
+        maxY = _resultLabel.frame.maxY
     }
     
     func setNumButton() {
         buttonWidth = _size.width / 4.0
-        buttonHeight = (_size.height - _answerLabel.frame.height - 20) / 5.0
-        for btag in numBtnTag.values {
-            switch btag.rawValue {
+        buttonHeight = (_size.height - _resultLabel.frame.height - 20) / 5.0
+        for nbtag in numBtnTag.values {
+            switch nbtag.rawValue {
             case 1, 4, 7, 10:
                 buttonX = 0
             case 2, 5, 8:
@@ -88,7 +80,7 @@ class ViewController: UIViewController {
             default:
                 buttonX = buttonWidth * 2
             }
-            switch btag.rawValue {
+            switch nbtag.rawValue {
             case 7, 8, 9:
                 buttonY = maxY + buttonHeight
             case 4, 5, 6:
@@ -100,8 +92,8 @@ class ViewController: UIViewController {
             }
             _numButton = UIButton(frame: CGRect(x: buttonX, y: buttonY, width: buttonWidth, height: buttonHeight))
             _numButton.backgroundColor = .cyan
-            _numButton.tag = btag.rawValue
-            _numButton.setTitle(btag.toStr(), for: .normal)
+            _numButton.tag = nbtag.rawValue
+            _numButton.setTitle(nbtag.toStr(), for: .normal)
             _numButton.layer.borderColor = UIColor.white.cgColor
             _numButton.layer.borderWidth = 1.0
             self.view.addSubview(_numButton)
@@ -109,7 +101,37 @@ class ViewController: UIViewController {
     }
     
     func setFuncButton() {
-        
+        for fbtag in funcBtnTag.fvalues {
+            switch fbtag.rawValue {
+            case "clear":
+                buttonX = 0
+            case "inverse", "period":
+                buttonX = buttonWidth
+            case "percent", "equal":
+                buttonX = buttonWidth * 2
+            default:
+                buttonX = buttonWidth * 3
+            }
+            switch fbtag.rawValue {
+            case "divide":
+                buttonY = maxY + buttonHeight
+            case "multiple":
+                buttonY = maxY + buttonHeight * 2
+            case "subtract":
+                buttonY = maxY + buttonHeight * 3
+            case "add", "period", "equal":
+                buttonY = maxY + buttonHeight * 4
+            default:
+                buttonY = maxY
+            }
+            _funcButton = UIButton(frame: CGRect(x: buttonX, y: buttonY, width: buttonWidth, height: buttonHeight))
+            _funcButton.backgroundColor = .green
+            _funcButton.tag = fbtag.numbering()
+            _funcButton.setTitle(fbtag.rawValue, for: .normal)
+            _funcButton.layer.borderColor = UIColor.white.cgColor
+            _funcButton.layer.borderWidth = 1.0
+            self.view.addSubview(_funcButton)
+        }
     }
 }
 
@@ -126,7 +148,42 @@ enum numBtnTag: Int {
     }
 }
 
-enum funcBtnTag: Int {
+enum funcBtnTag: String {
+    case clear = "clear"
+    case inverse = "inverse"
+    case percent = "percent"
+    case delete = "delete"
+    case divide = "divide"
+    case multiple = "multiple"
+    case subtract = "subtract"
+    case add = "add"
+    case equal = "equal"
+    case period = "period"
+    static let fvalues: [funcBtnTag] = [clear, inverse, percent, delete, divide, multiple, subtract, add, equal, period]
     
+    func numbering() -> Int {
+        switch self {
+        case .clear:
+            return 11
+        case .inverse:
+            return 12
+        case .percent:
+            return 13
+        case .delete:
+            return 14
+        case .divide:
+            return 24
+        case .multiple:
+            return 34
+        case .subtract:
+            return 44
+        case .add:
+            return 54
+        case .equal:
+            return 53
+        default: // case "period":
+            return 52
+        }
+    }
 }
 
