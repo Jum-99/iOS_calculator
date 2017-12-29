@@ -17,13 +17,28 @@ class CalculatorViewController: UIViewController {
     // variate
 
     // view
+    var _mainView: UIView!;
     
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        // constant setting
         _size = UIScreen.main.bounds.size;
         self.view.backgroundColor = .white;
         
+        // view setting
+        setMainView();
+        
         print("Did load: CalculatorViewController");
+    }
+    
+    //------------------------------------------
+    // View Setting
+    //------------------------------------------
+    
+    func setMainView() {
+        _mainView = UIView(frame: CGRect(origin: CGPoint.zero, size: _size));
+        _mainView.backgroundColor = .blue;
+        self.view.addSubview(_mainView);
     }
 }
