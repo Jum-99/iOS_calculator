@@ -14,7 +14,6 @@
 		84A7AA561FECF8FF006B817A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A7AA541FECF8FF006B817A /* LaunchScreen.storyboard */; };
 		84A7AA611FECF8FF006B817A /* iOS_CalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A7AA601FECF8FF006B817A /* iOS_CalculatorTests.swift */; };
 		84A7AA6C1FECF900006B817A /* iOS_CalculatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A7AA6B1FECF900006B817A /* iOS_CalculatorUITests.swift */; };
-		84A7AA7A1FF642E1006B817A /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A7AA791FF642E1006B817A /* CalculatorViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +47,6 @@
 		84A7AA671FECF900006B817A /* iOS CalculatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS CalculatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A7AA6B1FECF900006B817A /* iOS_CalculatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_CalculatorUITests.swift; sourceTree = "<group>"; };
 		84A7AA6D1FECF900006B817A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84A7AA791FF642E1006B817A /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +99,6 @@
 			children = (
 				84A7AA4B1FECF8FF006B817A /* AppDelegate.swift */,
 				84A7AA4D1FECF8FF006B817A /* ViewController.swift */,
-				84A7AA791FF642E1006B817A /* CalculatorViewController.swift */,
 				84A7AA4F1FECF8FF006B817A /* Main.storyboard */,
 				84A7AA521FECF8FF006B817A /* Assets.xcassets */,
 				84A7AA541FECF8FF006B817A /* LaunchScreen.storyboard */,
@@ -263,7 +260,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84A7AA4E1FECF8FF006B817A /* ViewController.swift in Sources */,
-				84A7AA7A1FF642E1006B817A /* CalculatorViewController.swift in Sources */,
 				84A7AA4C1FECF8FF006B817A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
