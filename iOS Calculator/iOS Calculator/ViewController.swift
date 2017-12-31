@@ -176,6 +176,7 @@ class ViewController: UIViewController {
                 answerNumSub = answerNumSub + numBtnValue * pow(10.0, -havPeriod)
                 havPeriod = havPeriod + 1.0
                 answerStr = answerStr + String(format: "%.f", numBtnValue)
+                
                 answerNum = answerNum + answerNumSub - prevAnswerNumSub
                 prevAnswerNumSub = answerNumSub
                 
@@ -183,7 +184,8 @@ class ViewController: UIViewController {
                 
                 answerNumSub = 10 * answerNumSub + numBtnValue
                 answerStr = answerStr + String(format: "%.f", numBtnValue)
-                if answerNumSub >= 0.0 && answerNumSub < 10.0{
+                
+                if answerNumSub >= 0.0 && answerNumSub < 10.0 {
                     answerNum = answerNum + answerNumSub
                 } else {
                     answerNum = answerNum + answerNumSub - prevAnswerNumSub
@@ -192,35 +194,75 @@ class ViewController: UIViewController {
                 
             }
         } else if thisFunc == 2 { // subtract
-            answerNumSub = 10 * answerNumSub + numBtnValue
-            answerStr = answerStr + String(format: "%.f", numBtnValue)
             
-            if answerNumSub >= 0.0 && answerNumSub < 10.0{
-                answerNum = answerNum - answerNumSub
-            } else {
+            if havPeriod > 0.0 {
+                
+                answerNumSub = answerNumSub + numBtnValue * pow(10.0, -havPeriod)
+                havPeriod = havPeriod + 1.0
+                answerStr = answerStr + String(format: "%.f", numBtnValue)
+                
                 answerNum = answerNum - answerNumSub + prevAnswerNumSub
+                prevAnswerNumSub = answerNumSub
+                
+            } else {
+                
+                answerNumSub = 10 * answerNumSub + numBtnValue
+                answerStr = answerStr + String(format: "%.f", numBtnValue)
+                
+                if answerNumSub >= 0.0 && answerNumSub < 10.0 {
+                    answerNum = answerNum - answerNumSub
+                } else {
+                    answerNum = answerNum - answerNumSub + prevAnswerNumSub
+                }
+                prevAnswerNumSub = answerNumSub
+                
             }
-            prevAnswerNumSub = answerNumSub
         } else if thisFunc == 3 { // multiple
-            answerNumSub = 10 * answerNumSub + numBtnValue
-            answerStr = answerStr + String(format: "%.f", numBtnValue)
-            
-            if answerNumSub >= 0.0 && answerNumSub < 10.0{
-                answerNum = answerNum * answerNumSub
-            } else {
+            if havPeriod > 0.0 {
+                
+                answerNumSub = answerNumSub + numBtnValue * pow(10.0, -havPeriod)
+                havPeriod = havPeriod + 1.0
+                answerStr = answerStr + String(format: "%.f", numBtnValue)
+                
                 answerNum = (answerNum / prevAnswerNumSub) * answerNumSub
-            }
-            prevAnswerNumSub = answerNumSub
-        } else if thisFunc == 4 { // divide
-            answerNumSub = 10 * answerNumSub + numBtnValue
-            answerStr = answerStr + String(format: "%.f", numBtnValue)
-            
-            if answerNumSub >= 0.0 && answerNumSub < 10.0{
-                answerNum = answerNum / answerNumSub
+                prevAnswerNumSub = answerNumSub
+                
             } else {
-                answerNum = (answerNum * prevAnswerNumSub) / answerNumSub
+                
+                answerNumSub = 10 * answerNumSub + numBtnValue
+                answerStr = answerStr + String(format: "%.f", numBtnValue)
+                
+                if answerNumSub >= 0.0 && answerNumSub < 10.0 {
+                    answerNum = answerNum * answerNumSub
+                } else {
+                    answerNum = (answerNum / prevAnswerNumSub) * answerNumSub
+                }
+                prevAnswerNumSub = answerNumSub
+                
             }
-            prevAnswerNumSub = answerNumSub
+        } else if thisFunc == 4 { // divide
+            if havPeriod > 0.0 {
+                
+                answerNumSub = answerNumSub + numBtnValue * pow(10.0, -havPeriod)
+                havPeriod = havPeriod + 1.0
+                answerStr = answerStr + String(format: "%.f", numBtnValue)
+                
+                answerNum = (answerNum * prevAnswerNumSub) / answerNumSub
+                prevAnswerNumSub = answerNumSub
+                
+            } else {
+                
+                answerNumSub = 10 * answerNumSub + numBtnValue
+                answerStr = answerStr + String(format: "%.f", numBtnValue)
+                
+                if answerNumSub >= 0.0 && answerNumSub < 10.0 {
+                    answerNum = answerNum / answerNumSub
+                } else {
+                    answerNum = (answerNum * prevAnswerNumSub) / answerNumSub
+                }
+                prevAnswerNumSub = answerNumSub
+                
+            }
         } else {
             if thisFunc == 10 { // after equal
                 answerNum = 0.0
