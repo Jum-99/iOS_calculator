@@ -20,11 +20,16 @@ class ViewController: UIViewController {
     var buttonX: CGFloat = 0
     var buttonY: CGFloat = 0
     var answerNum: Double = 0.0
+    var answerNumSub: Double = 0.0
+    var prevAnswerNumSub: Double = 0.0
+    var answerNumStr: Double = 0.0
     var answerStr: String = ""
+    var counter: Int = 0
 
     // view
     var _mainView: UIView!
     var _resultLabel: UILabel!
+    var _resultTextLabel: UILabel!
     var _numButton: UIButton!
     var _funcButton: UIButton!
     
@@ -42,6 +47,7 @@ class ViewController: UIViewController {
         setResultLabel()
         setNumButton()
         setFuncButton()
+        setResultTextLabel()
         
         print("Did load: ViewController")
     }
@@ -68,6 +74,18 @@ class ViewController: UIViewController {
         _resultLabel.backgroundColor = .red
         self.view.addSubview(_resultLabel)
         maxY = _resultLabel.frame.maxY
+    }
+    
+    func setResultTextLabel() {
+        let answerHeight: CGFloat = _resultLabel.frame.height / 1.5
+        _resultTextLabel = UILabel(frame: CGRect(x: 0, y: maxY - answerHeight, width: _size.width, height: answerHeight))
+        _resultTextLabel.backgroundColor = .red
+        _resultTextLabel.text = ""
+        _resultTextLabel.textAlignment = .right
+        _resultTextLabel.font = UIFont(name: "BanglaSangamMN", size: _resultTextLabel.frame.height)
+        _resultTextLabel.numberOfLines = 1
+        _resultTextLabel.adjustsFontSizeToFitWidth = true
+        self.view.addSubview(_resultTextLabel)
     }
     
     func setNumButton() {
@@ -151,15 +169,26 @@ class ViewController: UIViewController {
             numBtnValue = Double(sender.tag)
         }
         
-        if answerNum == 0.0 {
-            answerNum = numBtnValue
-            answerStr = String(describing: answerNum)
+        if answerStr.hasSuffix("+") || counter > 0 {
+            counter = counter + 1
+            
+            answerNumSub = 10 * answerNumSub + numBtnValue
+            answerStr = answerStr + String(format: "%.f", numBtnValue)
+            
+            if answerNumSub >= 0.0 && answerNumSub < 10.0{
+                answerNum = answerNum + answerNumSub
+            } else {
+                answerNum = answerNum + answerNumSub - prevAnswerNumSub
+            }
+            prevAnswerNumSub = answerNumSub
         } else {
             answerNum = 10 * answerNum + numBtnValue
-            answerStr = String(describing: answerNum)
+            answerStr = String(format: "%.f", answerNum)
         }
         
-        print(String(format: "%.f", answerNum))
+        print(answerStr)
+        
+        _resultTextLabel.text = answerStr
     }
     
     @objc internal func funcBtnPushed(_ sender: UIButton) {
@@ -167,6 +196,11 @@ class ViewController: UIViewController {
         switch sender.tag {
         case 11: // clear
             funcBtnValue = "clear"
+            answerNum = 0.0
+            answerNumSub = 0.0
+            answerStr = ""
+            counter = 0
+            _resultTextLabel.text = answerStr
         case 12: // inverse
             funcBtnValue = "inverse"
         case 13: // percent
@@ -183,13 +217,18 @@ class ViewController: UIViewController {
             funcBtnValue = "period"
         case 53: // equal
             funcBtnValue = "equal"
+            answerStr = String(format: "%.f", answerNum)
         case 54: // add
             funcBtnValue = "add"
+            counter = 0
+            answerNumSub = 0.0
+            answerStr = answerStr + "+"
         default:
             funcBtnValue = "default"
         }
         
         print(funcBtnValue)
+        _resultTextLabel.text = answerStr
     }
     
     //------------------------------------------
