@@ -22,9 +22,9 @@ class ViewController: UIViewController {
     var answerNum: Double = 0.0
     var answerNumSub: Double = 0.0
     var prevAnswerNumSub: Double = 0.0
-    var answerNumStr: Double = 0.0
+    var answerNumStr: String = ""
     var answerStr: String = ""
-    var counter: Int = 0
+    var havPeriod: Double = 0.0
     var thisFunc: Int = 0
 
     // view
@@ -171,8 +171,6 @@ class ViewController: UIViewController {
         }
         
         if thisFunc == 1 { // add
-            counter = counter + 1
-            
             answerNumSub = 10 * answerNumSub + numBtnValue
             answerStr = answerStr + String(format: "%.f", numBtnValue)
             
@@ -183,8 +181,6 @@ class ViewController: UIViewController {
             }
             prevAnswerNumSub = answerNumSub
         } else if thisFunc == 2 { // subtract
-            counter = counter + 1
-            
             answerNumSub = 10 * answerNumSub + numBtnValue
             answerStr = answerStr + String(format: "%.f", numBtnValue)
             
@@ -195,8 +191,6 @@ class ViewController: UIViewController {
             }
             prevAnswerNumSub = answerNumSub
         } else if thisFunc == 3 { // multiple
-            counter = counter + 1
-            
             answerNumSub = 10 * answerNumSub + numBtnValue
             answerStr = answerStr + String(format: "%.f", numBtnValue)
             
@@ -207,8 +201,6 @@ class ViewController: UIViewController {
             }
             prevAnswerNumSub = answerNumSub
         } else if thisFunc == 4 { // divide
-            counter = counter + 1
-            
             answerNumSub = 10 * answerNumSub + numBtnValue
             answerStr = answerStr + String(format: "%.f", numBtnValue)
             
@@ -224,8 +216,14 @@ class ViewController: UIViewController {
                 answerStr = ""
                 thisFunc = 0
             }
-            answerNum = 10 * answerNum + numBtnValue
-            answerStr = String(format: "%.f", answerNum)
+            if havPeriod > 0.0 {
+                answerNum = answerNum + numBtnValue * pow(10.0, -havPeriod)
+                havPeriod = havPeriod + 1.0
+                answerStr = String(answerNum)
+            } else {
+                answerNum = 10 * answerNum + numBtnValue
+                answerStr = String(format: "%.f", answerNum)
+            }
         }
         
         print(answerStr)
@@ -241,7 +239,7 @@ class ViewController: UIViewController {
             answerNum = 0.0
             answerNumSub = 0.0
             answerStr = ""
-            counter = 0
+            havPeriod = 0.0
             thisFunc = 0
             _resultTextLabel.text = answerStr
         case 12: // inverse
@@ -253,31 +251,38 @@ class ViewController: UIViewController {
         case 24: // divide
             funcBtnValue = "divide"
             thisFunc = 4
-            counter = 0
+            havPeriod = 0.0
             answerNumSub = 0.0
             answerStr = answerStr + "÷"
         case 34: // multiple
             funcBtnValue = "multiple"
             thisFunc = 3
-            counter = 0
+            havPeriod = 0.0
             answerNumSub = 0.0
             answerStr = answerStr + "×"
         case 44: // subtract
             funcBtnValue = "subtract"
             thisFunc = 2
-            counter = 0
+            havPeriod = 0.0
             answerNumSub = 0.0
             answerStr = answerStr + "-"
         case 52: // period
             funcBtnValue = "period"
+            if answerNumStr.contains(".") {
+                
+            } else {
+                answerStr = answerStr + "."
+                havPeriod = 1.0
+            }
         case 53: // equal
             funcBtnValue = "equal"
             thisFunc = 10
+            havPeriod = 0.0
             answerStr = String(format: "%.f", answerNum)
         case 54: // add
             funcBtnValue = "add"
             thisFunc = 1
-            counter = 0
+            havPeriod = 0.0
             answerNumSub = 0.0
             answerStr = answerStr + "+"
         default:
