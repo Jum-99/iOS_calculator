@@ -19,7 +19,9 @@ class ViewController: UIViewController {
     var maxY: CGFloat = 0
     var buttonX: CGFloat = 0
     var buttonY: CGFloat = 0
-    
+    var answerNum: Double = 0.0
+    var answerStr: String = ""
+
     // view
     var _mainView: UIView!
     var _resultLabel: UILabel!
@@ -131,6 +133,7 @@ class ViewController: UIViewController {
             _funcButton.setTitle(fbtag.rawValue, for: .normal)
             _funcButton.layer.borderColor = UIColor.white.cgColor
             _funcButton.layer.borderWidth = 1.0
+            _funcButton.addTarget(self, action: #selector(self.funcBtnPushed(_:)), for: .touchUpInside)
             self.view.addSubview(_funcButton)
         }
     }
@@ -148,7 +151,53 @@ class ViewController: UIViewController {
             numBtnValue = Double(sender.tag)
         }
         
-        print(numBtnValue)
+        if answerNum == 0.0 {
+            answerNum = numBtnValue
+            answerStr = String(describing: answerNum)
+        } else {
+            answerNum = 10 * answerNum + numBtnValue
+            answerStr = String(describing: answerNum)
+        }
+        
+        print(String(format: "%.f", answerNum))
+    }
+    
+    @objc internal func funcBtnPushed(_ sender: UIButton) {
+        var funcBtnValue: String = ""
+        switch sender.tag {
+        case 11: // clear
+            funcBtnValue = "clear"
+        case 12: // inverse
+            funcBtnValue = "inverse"
+        case 13: // percent
+            funcBtnValue = "percent"
+        case 14: // delete
+            funcBtnValue = "delete"
+        case 24: // divide
+            funcBtnValue = "divide"
+        case 34: // multiple
+            funcBtnValue = "multiple"
+        case 44: // subtract
+            funcBtnValue = "subtract"
+        case 52: // period
+            funcBtnValue = "period"
+        case 53: // equal
+            funcBtnValue = "equal"
+        case 54: // add
+            funcBtnValue = "add"
+        default:
+            funcBtnValue = "default"
+        }
+        
+        print(funcBtnValue)
+    }
+    
+    //------------------------------------------
+    // Function
+    //------------------------------------------
+
+    func calculate() {
+        
     }
 }
 
@@ -205,4 +254,5 @@ enum funcBtnTag: String {
         }
     }
 }
+
 
