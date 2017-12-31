@@ -72,7 +72,7 @@ class ViewController: UIViewController {
     func setResultLabel() {
         let labelHeight: CGFloat = 0.227 * (_size.height - 20)
         _resultLabel = UILabel(frame: CGRect(x: 0, y: maxY, width: _size.width, height: labelHeight))
-        _resultLabel.backgroundColor = .red
+        _resultLabel.backgroundColor = .black
         self.view.addSubview(_resultLabel)
         maxY = _resultLabel.frame.maxY
     }
@@ -80,10 +80,11 @@ class ViewController: UIViewController {
     func setResultTextLabel() {
         let answerHeight: CGFloat = _resultLabel.frame.height / 1.5
         _resultTextLabel = UILabel(frame: CGRect(x: 0, y: maxY - answerHeight, width: _size.width, height: answerHeight))
-        _resultTextLabel.backgroundColor = .red
+        _resultTextLabel.backgroundColor = .black
         _resultTextLabel.text = ""
         _resultTextLabel.textAlignment = .right
-        _resultTextLabel.font = UIFont(name: "BanglaSangamMN", size: _resultTextLabel.frame.height)
+        _resultTextLabel.font = UIFont(name: "BanglaSangamMN", size: _resultTextLabel.frame.height - 10)
+        _resultTextLabel.textColor = .white
         _resultTextLabel.numberOfLines = 1
         _resultTextLabel.adjustsFontSizeToFitWidth = true
         self.view.addSubview(_resultTextLabel)
@@ -112,27 +113,51 @@ class ViewController: UIViewController {
                 buttonY = maxY + buttonHeight * 4
             }
             _numButton = UIButton(frame: CGRect(x: buttonX, y: buttonY, width: buttonWidth, height: buttonHeight))
-            _numButton.backgroundColor = .cyan
+            _numButton.backgroundColor = .black
             _numButton.tag = nbtag.rawValue
             _numButton.setTitle(nbtag.toStr(), for: .normal)
+            _numButton.titleLabel?.font = UIFont.systemFont(ofSize: 50)
             _numButton.layer.borderColor = UIColor.white.cgColor
-            _numButton.layer.borderWidth = 1.0
+            _numButton.layer.borderWidth = 0.5
             _numButton.addTarget(self, action: #selector(self.numBtnPushed(_:)), for: .touchUpInside)
             self.view.addSubview(_numButton)
         }
     }
     
     func setFuncButton() {
+        var fbtnTitle: String = ""
         for fbtag in funcBtnTag.fvalues {
             switch fbtag.rawValue {
             case "clear":
                 buttonX = 0
+                fbtnTitle = "C"
             case "inverse", "period":
                 buttonX = buttonWidth
+                if fbtag.rawValue == "inverse" {
+                    fbtnTitle = "+/-"
+                } else {
+                    fbtnTitle = "."
+                }
             case "percent", "equal":
                 buttonX = buttonWidth * 2
+                if fbtag.rawValue == "percent" {
+                    fbtnTitle = "%"
+                } else {
+                    fbtnTitle = "="
+                }
             default:
                 buttonX = buttonWidth * 3
+                if fbtag.rawValue == "delete" {
+                    fbtnTitle = "del"
+                } else if fbtag.rawValue == "divide" {
+                    fbtnTitle = "÷"
+                } else if fbtag.rawValue == "multiple" {
+                    fbtnTitle = "×"
+                } else if fbtag.rawValue == "subtract" {
+                    fbtnTitle = "-"
+                } else {
+                    fbtnTitle = "+"
+                }
             }
             switch fbtag.rawValue {
             case "divide":
@@ -147,11 +172,12 @@ class ViewController: UIViewController {
                 buttonY = maxY
             }
             _funcButton = UIButton(frame: CGRect(x: buttonX, y: buttonY, width: buttonWidth, height: buttonHeight))
-            _funcButton.backgroundColor = .green
+            _funcButton.backgroundColor = .black
             _funcButton.tag = fbtag.numbering()
-            _funcButton.setTitle(fbtag.rawValue, for: .normal)
+            _funcButton.setTitle(fbtnTitle, for: .normal)
+            _funcButton.titleLabel?.font = UIFont.systemFont(ofSize: 50)
             _funcButton.layer.borderColor = UIColor.white.cgColor
-            _funcButton.layer.borderWidth = 1.0
+            _funcButton.layer.borderWidth = 0.5
             _funcButton.addTarget(self, action: #selector(self.funcBtnPushed(_:)), for: .touchUpInside)
             self.view.addSubview(_funcButton)
         }
