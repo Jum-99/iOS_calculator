@@ -171,15 +171,26 @@ class ViewController: UIViewController {
         }
         
         if thisFunc == 1 { // add
-            answerNumSub = 10 * answerNumSub + numBtnValue
-            answerStr = answerStr + String(format: "%.f", numBtnValue)
-            
-            if answerNumSub >= 0.0 && answerNumSub < 10.0{
-                answerNum = answerNum + answerNumSub
-            } else {
+            if havPeriod > 0.0 {
+                
+                answerNumSub = answerNumSub + numBtnValue * pow(10.0, -havPeriod)
+                havPeriod = havPeriod + 1.0
+                answerStr = answerStr + String(format: "%.f", numBtnValue)
                 answerNum = answerNum + answerNumSub - prevAnswerNumSub
+                prevAnswerNumSub = answerNumSub
+                
+            } else {
+                
+                answerNumSub = 10 * answerNumSub + numBtnValue
+                answerStr = answerStr + String(format: "%.f", numBtnValue)
+                if answerNumSub >= 0.0 && answerNumSub < 10.0{
+                    answerNum = answerNum + answerNumSub
+                } else {
+                    answerNum = answerNum + answerNumSub - prevAnswerNumSub
+                }
+                prevAnswerNumSub = answerNumSub
+                
             }
-            prevAnswerNumSub = answerNumSub
         } else if thisFunc == 2 { // subtract
             answerNumSub = 10 * answerNumSub + numBtnValue
             answerStr = answerStr + String(format: "%.f", numBtnValue)
@@ -226,8 +237,8 @@ class ViewController: UIViewController {
             }
         }
         
+        print(answerNum)
         print(answerStr)
-        
         _resultTextLabel.text = answerStr
     }
     
@@ -238,6 +249,7 @@ class ViewController: UIViewController {
             funcBtnValue = "clear"
             answerNum = 0.0
             answerNumSub = 0.0
+            prevAnswerNumSub = 0.0
             answerStr = ""
             havPeriod = 0.0
             thisFunc = 0
@@ -253,18 +265,21 @@ class ViewController: UIViewController {
             thisFunc = 4
             havPeriod = 0.0
             answerNumSub = 0.0
+            prevAnswerNumSub = 0.0
             answerStr = answerStr + "÷"
         case 34: // multiple
             funcBtnValue = "multiple"
             thisFunc = 3
             havPeriod = 0.0
             answerNumSub = 0.0
+            prevAnswerNumSub = 0.0
             answerStr = answerStr + "×"
         case 44: // subtract
             funcBtnValue = "subtract"
             thisFunc = 2
             havPeriod = 0.0
             answerNumSub = 0.0
+            prevAnswerNumSub = 0.0
             answerStr = answerStr + "-"
         case 52: // period
             funcBtnValue = "period"
@@ -278,12 +293,17 @@ class ViewController: UIViewController {
             funcBtnValue = "equal"
             thisFunc = 10
             havPeriod = 0.0
-            answerStr = String(format: "%.f", answerNum)
+            if floor(answerNum) == ceil(answerNum) {
+                answerStr = String(format: "%.f", answerNum)
+            } else {
+                answerStr = String(answerNum)
+            }
         case 54: // add
             funcBtnValue = "add"
             thisFunc = 1
             havPeriod = 0.0
             answerNumSub = 0.0
+            prevAnswerNumSub = 0.0
             answerStr = answerStr + "+"
         default:
             funcBtnValue = "default"
