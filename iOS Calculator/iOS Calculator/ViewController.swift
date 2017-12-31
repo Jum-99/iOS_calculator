@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     var answerNumStr: Double = 0.0
     var answerStr: String = ""
     var counter: Int = 0
+    var thisFunc: Int = 0
 
     // view
     var _mainView: UIView!
@@ -169,7 +170,43 @@ class ViewController: UIViewController {
             numBtnValue = Double(sender.tag)
         }
         
-        if answerStr.hasSuffix("+") || counter > 0 {
+        if thisFunc == 1 {
+            counter = counter + 1
+            
+            answerNumSub = 10 * answerNumSub + numBtnValue
+            answerStr = answerStr + String(format: "%.f", numBtnValue)
+            
+            if answerNumSub >= 0.0 && answerNumSub < 10.0{
+                answerNum = answerNum + answerNumSub
+            } else {
+                answerNum = answerNum + answerNumSub - prevAnswerNumSub
+            }
+            prevAnswerNumSub = answerNumSub
+        } else if thisFunc == 2 {
+            counter = counter + 1
+            
+            answerNumSub = 10 * answerNumSub + numBtnValue
+            answerStr = answerStr + String(format: "%.f", numBtnValue)
+            
+            if answerNumSub >= 0.0 && answerNumSub < 10.0{
+                answerNum = answerNum - answerNumSub
+            } else {
+                answerNum = answerNum - answerNumSub + prevAnswerNumSub
+            }
+            prevAnswerNumSub = answerNumSub
+        } else if answerStr.hasSuffix("×") || counter > 0 {
+            counter = counter + 1
+            
+            answerNumSub = 10 * answerNumSub + numBtnValue
+            answerStr = answerStr + String(format: "%.f", numBtnValue)
+            
+            if answerNumSub >= 0.0 && answerNumSub < 10.0{
+                answerNum = answerNum + answerNumSub
+            } else {
+                answerNum = answerNum + answerNumSub - prevAnswerNumSub
+            }
+            prevAnswerNumSub = answerNumSub
+        } else if answerStr.hasSuffix("÷") || counter > 0 {
             counter = counter + 1
             
             answerNumSub = 10 * answerNumSub + numBtnValue
@@ -200,6 +237,7 @@ class ViewController: UIViewController {
             answerNumSub = 0.0
             answerStr = ""
             counter = 0
+            thisFunc = 0
             _resultTextLabel.text = answerStr
         case 12: // inverse
             funcBtnValue = "inverse"
@@ -209,10 +247,20 @@ class ViewController: UIViewController {
             funcBtnValue = "delete"
         case 24: // divide
             funcBtnValue = "divide"
+            counter = 0
+            answerNumSub = 0.0
+            answerStr = answerStr + "÷"
         case 34: // multiple
             funcBtnValue = "multiple"
+            counter = 0
+            answerNumSub = 0.0
+            answerStr = answerStr + "×"
         case 44: // subtract
             funcBtnValue = "subtract"
+            thisFunc = 2
+            counter = 0
+            answerNumSub = 0.0
+            answerStr = answerStr + "-"
         case 52: // period
             funcBtnValue = "period"
         case 53: // equal
@@ -220,6 +268,7 @@ class ViewController: UIViewController {
             answerStr = String(format: "%.f", answerNum)
         case 54: // add
             funcBtnValue = "add"
+            thisFunc = 1
             counter = 0
             answerNumSub = 0.0
             answerStr = answerStr + "+"
