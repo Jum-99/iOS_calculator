@@ -219,6 +219,11 @@ class ViewController: UIViewController {
             }
             prevAnswerNumSub = answerNumSub
         } else {
+            if thisFunc == 10 { // after equal
+                answerNum = 0.0
+                answerStr = ""
+                thisFunc = 0
+            }
             answerNum = 10 * answerNum + numBtnValue
             answerStr = String(format: "%.f", answerNum)
         }
@@ -267,7 +272,7 @@ class ViewController: UIViewController {
             funcBtnValue = "period"
         case 53: // equal
             funcBtnValue = "equal"
-            thisFunc = 0
+            thisFunc = 10
             answerStr = String(format: "%.f", answerNum)
         case 54: // add
             funcBtnValue = "add"
